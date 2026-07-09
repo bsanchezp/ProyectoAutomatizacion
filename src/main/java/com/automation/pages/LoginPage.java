@@ -22,6 +22,10 @@ public class LoginPage extends BasePage {
         write(usernameInput, username);
     }
 
+    public void login (String user, String pass){
+        write(usernameInput, user);
+        write(passwordInput, pass);
+    }
     public void enterPassword(String password){
         write(passwordInput, password);
     }

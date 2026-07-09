@@ -19,3 +19,17 @@ Característica: Inicio de sesion y validacion del flujo de SauceDemo
   Ejemplos:
     | mensajeError                                                              |
     | Epic sadface: Username and password do not match any user in this service |
+
+
+  @Login_pass_empty
+  Esquema del escenario: Inicio de sesión con usuario incorrecto y el password vacio
+    Dado que estoy en la página de inicio de sesión
+    Cuando ingreso un usuario invalido
+    Y el password esta vacio
+    Y presiono el botón de inicio de sesión
+    Entonces debería visualizar el mensaje de error "<mensajeError>"
+    Ejemplos:
+      | mensajeError                       |
+      | Epic sadface: Password is required |
+
+

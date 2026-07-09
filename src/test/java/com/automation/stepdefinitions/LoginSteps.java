@@ -29,6 +29,12 @@ public class LoginSteps {
 
     }
 
+    @Dado("que inicio sesión con el usuario {string} y contraseña {string}")
+    public void login(String usuario, String password){
+        loginPage.login(usuario,password);
+        loginPage.clickLogin();
+        loginPage.waitSeconds(4);
+    }
 
     @Cuando("ingreso un usuario y contraseña válidos")
     public void ingresoCredencialesValidas(){
@@ -63,5 +69,10 @@ public class LoginSteps {
     @Entonces("debería visualizar el mensaje de error {string}")
     public void validarMensajeErrorLogin(String mensajeError) {
         assertEquals(loginPage.getMensajeError(),mensajeError);
+    }
+
+    @Y("el password esta vacio")
+    public void passwordVacio() {
+        loginPage.enterPassword("");
     }
 }
