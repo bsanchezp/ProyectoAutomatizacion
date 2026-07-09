@@ -9,15 +9,21 @@ public final class ConfigReader {
     private static final Properties PROPERTIES = new Properties();
 
     static {
+
+        String environment = Environment.getEnvironment();
+        String fileName = environment + ".properties";
+
         try (InputStream input = ConfigReader.class
                 .getClassLoader()
-                .getResourceAsStream("config.properties")) {
+                .getResourceAsStream(fileName)) {
             if (input == null) {
-                throw new RuntimeException("No se encontró config.properties");
+                throw new RuntimeException(
+                        "No se encontró el archivo: " + fileName);
             }
             PROPERTIES.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Error leyendo config.properties", e);
+            throw new RuntimeException(
+                    "Error leyendo " + fileName, e);
         }
     }
 
