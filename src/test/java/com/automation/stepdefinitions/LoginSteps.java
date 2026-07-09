@@ -2,11 +2,14 @@ package com.automation.stepdefinitions;
 
 
 import com.automation.pages.LoginPage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static com.automation.driver.DriverFactory.*;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;
+import io.cucumber.java.es.Y;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -45,5 +48,20 @@ public class LoginSteps {
     public void validarPaginaPrincipal(){
         assertTrue(loginPage.isHomePageDisplayed(),"La página principal no fue mostrada después del login");
 
+    }
+
+    @Cuando("ingreso un usuario invalido")
+    public void ingresoUnUsuarioInvalido() {
+        loginPage.enterUsername("standard_user_fail");
+    }
+
+    @Y("ingreso una contraseña valida")
+    public void ingresoUnaContrasenaValida() {
+        loginPage.enterPassword("secret_sauce");
+    }
+
+    @Entonces("debería visualizar el mensaje de error {string}")
+    public void validarMensajeErrorLogin(String mensajeError) {
+        assertEquals(loginPage.getMensajeError(),mensajeError);
     }
 }

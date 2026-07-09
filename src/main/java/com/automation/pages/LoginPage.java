@@ -9,6 +9,7 @@ public class LoginPage extends BasePage {
     private final By passwordInput = By.id("password");
     private final By loginButton = By.id("login-button");
     private final By homeTitle = By.className("title");
+    private final By labelErrorLogin = By.xpath("//h3[@data-test='error']");
 
 
     // Constructor
@@ -34,6 +35,9 @@ public class LoginPage extends BasePage {
         return isDisplayed(homeTitle);
     }
 
+    public String getMensajeError(){
+        return getText(labelErrorLogin);
+    }
     public String getHomeTitle(){
         return getText(homeTitle);
     }
