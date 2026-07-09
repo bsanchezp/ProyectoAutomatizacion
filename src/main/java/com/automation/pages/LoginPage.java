@@ -34,4 +34,7 @@ public class LoginPage extends BasePage {
         return isDisplayed(homeTitle);
     }
 
+    public String getHomeTitle(){
+        return getText(homeTitle);
+    }
 }

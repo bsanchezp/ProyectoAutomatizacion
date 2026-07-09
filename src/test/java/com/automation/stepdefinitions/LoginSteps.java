@@ -43,9 +43,7 @@ public class LoginSteps {
 
     @Entonces("debería visualizar la página principal")
     public void validarPaginaPrincipal(){
-        assertTrue(
-                loginPage.isHomePageDisplayed()
-        );
-    }
+        assertTrue(loginPage.isHomePageDisplayed(),"La página principal no fue mostrada después del login");
 
+    }
 }
