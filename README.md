@@ -24,6 +24,20 @@ Su objetivo es proporcionar una arquitectura escalable, mantenible y reutilizabl
 | 📊 **Reporte HTML de Cucumber**  | Generación automática de reportes de ejecución en formato HTML.                                                    |
 
 ---
+### Selenium WebDriver
+
+Se utilizó Selenium WebDriver como herramienta principal de automatización por ser el estándar de la industria para pruebas funcionales de aplicaciones web.
+
+Además, desde la versión 4.6 incorpora **Selenium Manager**, permitiendo administrar automáticamente el WebDriver sin necesidad de descargar ChromeDriver manualmente.
+
+**Beneficios**
+
+- Compatible con múltiples navegadores.
+- Gran comunidad y documentación.
+- Integración sencilla con Java y Maven.
+- Administración automática del WebDriver.
+
+--
 
 ## ✨ Características del framework
 
@@ -43,38 +57,153 @@ Su objetivo es proporcionar una arquitectura escalable, mantenible y reutilizabl
 ## 📂 Estructura del proyecto
 
 ```text
-src
-├── main
-│   └── java
-│       └── com.automation
-│           ├── driver
-│           ├── pages
-│           └── utils
+ProyectoAutomatizacionWeb
 │
-├── test
-│   ├── java
-│   │   └── com.automation
-│   │       ├── hooks
-│   │       ├── runners
-│   │       └── stepdefinitions
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com.automation
+│   │   │       ├── driver
+│   │   │       ├── pages
+│   │   │       └── utils
+│   │   │
+│   │   └── resources
+│   │       ├── config.properties
+│   │       ├── qa.properties
+│   │       ├── dev.properties
+│   │       └── prod.properties
 │   │
-│   └── resources
-│       ├── features
-│       └── junit-platform.properties
+│   └── test
+│       ├── java
+│       │   └── com.automation
+│       │       ├── hooks
+│       │       ├── runners
+│       │       └── stepdefinitions
+│       │
+│       └── resources
+│           ├── features
+│           └── junit-platform.properties
 │
 ├── pom.xml
-└── README.md
+├── README.md
+└── .gitignore
+```
+## Descripción de las carpetas
+
+| Carpeta | Descripción |
+|----------|-------------|
+| **driver** | Contiene la inicialización y administración del WebDriver mediante Selenium Manager. |
+| **pages** | Implementa el patrón Page Object Model (POM), encapsulando los localizadores y acciones de cada página. |
+| **utils** | Contiene clases utilitarias para la lectura de archivos de configuración, gestión de ambientes y otras funciones comunes. |
+| **hooks** | Configura las acciones que se ejecutan antes y después de cada escenario, como la inicialización y cierre del navegador, así como la captura de evidencias. |
+| **runners** | Contiene la clase encargada de ejecutar los escenarios de Cucumber mediante JUnit 5. |
+| **stepdefinitions** | Implementa los pasos definidos en los archivos Feature escritos en Gherkin. |
+| **features** | Almacena los escenarios de prueba escritos en lenguaje Gherkin siguiendo el enfoque BDD. |
+| **resources** | Contiene los archivos de configuración (`.properties`) para los diferentes ambientes de ejecución (QA, DEV y PROD). |
+---
+# Ejecución del proyecto
+
+## Ejecutar todos los escenarios
+
+```bash
+mvn clean test
 ```
 
 ---
 
-## 🎯 Objetivos del proyecto
+## Ejecutar por Tag
 
-* Implementar pruebas automatizadas utilizando buenas prácticas.
-* Mantener una arquitectura limpia, reutilizable y escalable.
-* Facilitar el mantenimiento mediante el patrón **Page Object Model (POM)**.
-* Permitir la ejecución de escenarios BDD utilizando Cucumber.
-* Integrar el framework con herramientas de Integración Continua (CI/CD).
+Ejemplo:
+
+```bash
+mvn clean test -Dcucumber.filter.tags="@Smoke"
+```
+
+o
+
+```bash
+mvn clean test -Dcucumber.filter.tags="@Checkout"
+```
+
+También es posible ejecutar directamente desde IntelliJ IDEA utilizando el TestRunner.
+
+---
+
+# Configuración de ambientes
+
+El framework soporta múltiples ambientes mediante archivos `.properties`.
+
+Actualmente se encuentran configurados:
+
+```
+qa.properties
+dev.properties
+uat.properties
+prod.properties
+```
+
+Cada archivo contiene la configuración específica del ambiente.
+
+Ejemplo:
+
+```properties
+base.url=https://www.saucedemo.com/
+browser=chrome
+timeout=10
+headless=false
+```
+
+---
+
+# Cambiar de ambiente
+
+Por defecto, el proyecto utiliza el ambiente **QA**.
+
+Para ejecutar sobre otro ambiente se debe enviar la propiedad `env`.
+
+Ejemplo:
+
+### QA
+
+```bash
+mvn clean test -Denv=qa
+```
+
+### DEV
+
+```bash
+mvn clean test -Denv=dev
+```
+
+### UAT
+
+```bash
+mvn clean test -Denv=uat
+```
+
+### PROD
+
+```bash
+mvn clean test -Denv=prod
+```
+
+La clase `Environment` obtiene automáticamente el valor de `env` y `ConfigReader` carga el archivo correspondiente.
+
+---
+
+# Funcionalidades implementadas
+
+- Inicio de sesión exitoso.
+- Validación de credenciales inválidas.
+- Agregar productos al carrito.
+- Validación del contador del carrito.
+- Validación del subtotal.
+- Checkout completo.
+- Confirmación de compra.
+- Escenarios parametrizados mediante **Scenario Outline**.
+- Captura automática de evidencias (Screenshots).
+- Soporte para ejecución por Tags.
+- Soporte para múltiples ambientes.
 
 ---
 
